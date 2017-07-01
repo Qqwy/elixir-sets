@@ -16,8 +16,8 @@ defmodule Sets do
   - `Sets.Protocol` (implementing this for a different datatype allows you to use 99% of the functions of `Sets` directly on that datatype)
   - `Enumerable`: Elixir's built-in folding protocol.
   - `Collectable`: Elixir's built-in collecting protocol.
-  - `Combinable`: FunLand's combining semi-protocol.
-  - `Reducable`: FunLand's simplified folding semi-protocol.
+  - `FunLand.Combinable`: FunLand's combining semi-protocol.
+  - `FunLand.Reducable`: FunLand's simplified folding semi-protocol.
   - `Extractable`: Extractable's protocol extracting one element at a time.
   - `Insertable`: Insertable's protocol to insert one element at a time.
   - `Inspect`: A humanly readable visual representation of the set, regardless of the inner structual representation.
