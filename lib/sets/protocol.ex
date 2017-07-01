@@ -51,7 +51,7 @@ defprotocol Sets.Protocol do
   True if `set1` and `set2` have no members in common.
   """
   @spec disjoint?(set, set) :: boolean
-  def disjoint?(set, set)
+  def disjoint?(set1, set2)
 
   @doc """
   True if `set1` and `set2` contain exactly the same elements.
