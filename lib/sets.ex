@@ -1,4 +1,32 @@
 defmodule Sets do
+  @moduledoc """
+  Public Set Interface.
+
+  `Sets` exposes many functions that work with sets.
+
+  Anything that implements the `Sets` protocol and the `FunLand.Combinable` behaviour
+  can be used through this API.
+
+  By default, `Sets` ships with:
+
+  - `GbSet`: A Set representation built on top of a Generalized Balanced Binary Tree. Wraps the Erlang `:gb_sets` library.
+  - `Ordset`: A Set representation built on top of an ordered list. Wraps the Erlang `:ordsets` library.
+  - `UnspecifiedSet`: A set representation whose internals are unspecified (and might change in future Erlang versions). Wraps the Erlang `:sets` library.
+  - `MapSet`: The Elixir set type that is part of Elixir's core library, built on top of the built-in hashmap type.
+
+
+  ### Protocols
+
+  All sets that are part of `Sets` implement the following protocols:
+
+  - `Sets.Protocol` (implementing this for a different datatype allows you to use 99% of the functions of `Sets` directly on that datatype)
+  - `Enumerable`: Elixir's built-in folding protocol.
+  - `Collectable`: Elixir's built-in collecting protocol.
+  - `Reducable`: FunLand's simplified folding protocol.
+  - `Extractable`: Extractable's protocol extracting one element at a time.
+  - `Insertable`: Insertable's protocol to insert one element at a time.
+  - `Inspect`: A humanly readable visual representation of the set, regardless of the inner structual representation.
+  """
 
   @type set :: Sets.Protocol.t
 
@@ -17,7 +45,7 @@ defmodule Sets do
   """
   def empty(options \\ []) do
     impl_module = Keyword.get(options, :implementation, Application.get_env(:sets, :default_set_implementation, @default_set_implementation))
-    impl_module.empty()
+    FunLand.Combinable.empty(impl_module)
   end
 
   @doc """
