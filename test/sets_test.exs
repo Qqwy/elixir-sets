@@ -10,6 +10,8 @@ defmodule SetsTest do
 
       test "#{module} creation" do
         assert Sets.empty(implementation: unquote(module)) == unquote(module).empty()
+
+        assert :lists.sort(Sets.new([1,2,3], implementation: unquote(module)) |> Sets.to_list) == [1,2,3]
       end
 
       test "#{module} insertion and to_list" do
@@ -69,6 +71,24 @@ defmodule SetsTest do
         set = Enum.into(1..100, Sets.empty(implementation: unquote(module)))
         assert :lists.sort(Sets.to_list(set)) == Enum.to_list(1..100)
       end
+
+      test "#{module} difference" do
+        set = simple_set(unquote(module))
+        assert Sets.equal?(Sets.difference(set, set), Sets.empty(implementation: unquote(module)))
+        assert Sets.equal?(Sets.difference(set, Sets.empty(implementation: unquote(module))), set)
+      end
+
+      test "#{module} union" do
+        set = simple_set(unquote(module))
+        assert Sets.equal?(Sets.union(set, Sets.empty(implementation: unquote(module))), set)
+        assert Sets.equal?(Sets.union(set, set), set)
+      end
+
+      test "#{module} intersection" do
+        set = simple_set(unquote(module))
+        assert Sets.equal?(Sets.intersection(set, set), set)
+        assert Sets.equal?(Sets.intersection(Sets.new([1,2], implementation: unquote(module)), Sets.new([1,3], implementation: unquote(module))), Sets.new([1], implementation: unquote(module)))
+      end
   end
 
   defp simple_set(impl_module) do
@@ -78,4 +98,5 @@ defmodule SetsTest do
     |> Sets.insert(3)
     |> Sets.insert(4)
   end
+
 end

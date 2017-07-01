@@ -4,8 +4,9 @@ defmodule Sets do
 
   `Sets` exposes many functions that work with sets.
 
-  Anything that implements the `Sets` protocol and the `FunLand.Combinable` behaviour
+  Anything that implements the `Sets.Protocol` protocol together with the `Collectable` protocol and a `empty/0` struct-returning-function,
   can be used through this API.
+  (although it is highly advised to implement the other protocols and behaviours listed under the 'Protocols' section as well).
 
   By default, `Sets` ships with:
 
@@ -14,18 +15,22 @@ defmodule Sets do
   - `UnspecifiedSet`: A set representation whose internals are unspecified (and might change in future Erlang versions). Wraps the Erlang `:sets` library.
   - `MapSet`: The Elixir set type that is part of Elixir's core library, built on top of the built-in hashmap type.
 
-
-  ### Protocols
+  ### Protocols and behaviours
 
   All sets that are part of `Sets` implement the following protocols:
 
   - `Sets.Protocol` (implementing this for a different datatype allows you to use 99% of the functions of `Sets` directly on that datatype)
   - `Enumerable`: Elixir's built-in folding protocol.
   - `Collectable`: Elixir's built-in collecting protocol.
-  - `Reducable`: FunLand's simplified folding protocol.
+  - `Combinable`: FunLand's combining semi-protocol.
+  - `Reducable`: FunLand's simplified folding semi-protocol.
   - `Extractable`: Extractable's protocol extracting one element at a time.
   - `Insertable`: Insertable's protocol to insert one element at a time.
   - `Inspect`: A humanly readable visual representation of the set, regardless of the inner structual representation.
+
+  If you want your own set implementation to work with `Sets`, at least `Sets.Protocol` and `Collectable` are required, but implementing
+  the others is highly recommended as well.
+
   """
 
   @type set :: Sets.Protocol.t
@@ -45,7 +50,15 @@ defmodule Sets do
   """
   def empty(options \\ []) do
     impl_module = Keyword.get(options, :implementation, Application.get_env(:sets, :default_set_implementation, @default_set_implementation))
-    FunLand.Combinable.empty(impl_module)
+
+    case impl_module do
+      MapSet -> MapSet.new()
+      _ -> impl_module.empty()
+    end
+  end
+
+  def new(enumerable, options \\ []) do
+    Enum.into(enumerable, empty(options))
   end
 
   @doc """
