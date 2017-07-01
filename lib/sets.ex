@@ -87,7 +87,7 @@ defmodule Sets do
 
   - Other options are passed on to the underlying set implementation.
   """
-  def new(enumerable, options \\ []) do
+  def new(enumerable \\ [], options \\ []) do
     Enum.into(enumerable, empty(options))
   end
 
