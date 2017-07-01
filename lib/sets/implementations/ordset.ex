@@ -54,7 +54,6 @@ defmodule Sets.Implementations.Ordset do
       :ordsets.is_disjoint(contents1, contents2)
     end
 
-    # Quite slow...
     def equal?(%Ordset{contents: contents1}, %Ordset{contents: contents2}) do
       contents1 == contents2
     end
