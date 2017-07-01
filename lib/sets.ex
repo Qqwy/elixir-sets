@@ -1,6 +1,6 @@
 defmodule Sets do
 
-  @type set :: t
+  @type set :: Sets.Protocol.t
 
   @default_set_implementation  Sets.Implementations.GbSet
   @doc """
@@ -95,5 +95,5 @@ defmodule Sets do
   Converts the set to a list (in any order)
   """
   @spec to_list(set) :: list
-  defdelegate to_list(set)
+  defdelegate to_list(set), to: Sets.Protocol
 end

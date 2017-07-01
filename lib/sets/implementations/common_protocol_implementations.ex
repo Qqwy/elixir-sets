@@ -1,5 +1,6 @@
 for module <- [
-      Sets.Implementations.GbSet
+      Sets.Implementations.GbSet,
+      Sets.Implementations.UnspecifiedSet,
     ] do
 
     defimpl Inspect, for: module do
@@ -42,9 +43,5 @@ for module <- [
 
         {original, collector_fun}
       end
-    end
-
-    defimpl Inspect, for: module do
-      
     end
 end

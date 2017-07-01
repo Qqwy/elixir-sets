@@ -39,7 +39,7 @@ defmodule Sets.Implementations.GbSet do
     end
 
     def difference(%GbSet{contents: contents1}, %GbSet{contents: contents2}) do
-      %GbSet{contents: :gb_sets.difference(contents1, contents2)}
+      %GbSet{contents: :gb_sets.subtract(contents1, contents2)}
     end
 
     def union(%GbSet{contents: contents1}, %GbSet{contents: contents2}) do
@@ -51,7 +51,7 @@ defmodule Sets.Implementations.GbSet do
     end
 
     def member?(%GbSet{contents: contents}, elem) do
-      :gb_sets.is_member(elem, contents)
+      :gb_sets.is_element(elem, contents)
     end
 
     def disjoint?(%GbSet{contents: contents1}, %GbSet{contents: contents2}) do
@@ -69,6 +69,10 @@ defmodule Sets.Implementations.GbSet do
 
     def singleton(elem) do
       %GbSet{contents: :gb_sets.singleton(elem)}
+    end
+
+    def to_list(%GbSet{contents: contents}) do
+      :gb_sets.to_list(contents)
     end
   end
 
