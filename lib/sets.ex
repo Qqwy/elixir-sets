@@ -1,8 +1,6 @@
 defmodule Sets do
   @moduledoc """
-  Public Set Interface.
-
-  `Sets` exposes many functions that work with sets.
+  Well-structured Sets for Elixir, offering a common interface with multiple implementations with varying performance guarantees that can be switched in your configuration.
 
   By default, `Sets` ships with:
 
