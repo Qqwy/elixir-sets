@@ -22,10 +22,6 @@ defmodule Sets.Implementations.GbSet do
   defimpl Sets.Protocol do
     alias Sets.Implementations.GbSet
 
-    def empty(_options \\ []) do
-      %GbSet{contents: :gb_sets.empty()}
-    end
-
     def insert(set = %GbSet{contents: contents}, elem) do
       %GbSet{set | contents: :gb_sets.add_element(elem, contents)}
     end

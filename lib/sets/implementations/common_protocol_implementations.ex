@@ -1,5 +1,6 @@
 for module <- [
       Sets.Implementations.GbSet,
+      Sets.Implementations.Ordset,
       Sets.Implementations.UnspecifiedSet,
     ] do
 

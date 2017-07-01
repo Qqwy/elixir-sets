@@ -22,10 +22,6 @@ defmodule Sets.Implementations.UnspecifiedSet do
   defimpl Sets.Protocol do
     alias Sets.Implementations.UnspecifiedSet
 
-    def empty(_options \\ []) do
-      %UnspecifiedSet{contents: :sets.new()}
-    end
-
     def insert(set = %UnspecifiedSet{contents: contents}, elem) do
       %UnspecifiedSet{set | contents: :sets.add_element(elem, contents)}
     end
