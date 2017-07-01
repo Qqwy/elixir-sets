@@ -17,7 +17,7 @@ defmodule SetsTest do
         |> Sets.insert(1)
         |> Sets.insert(2)
 
-        :lists.sort(Sets.to_list(set)) == [1, 2]
+        assert :lists.sort(Sets.to_list(set)) == [1, 2]
       end
 
       test "#{module} Extractable.extract" do
@@ -69,14 +69,13 @@ defmodule SetsTest do
         set = Enum.into(1..100, Sets.empty(implementation: unquote(module)))
         assert :lists.sort(Sets.to_list(set)) == Enum.to_list(1..100)
       end
+  end
 
-      defp simple_set(impl_module) do
-        Sets.empty(implementation: impl_module)
-        |> Sets.insert(1)
-        |> Sets.insert(2)
-        |> Sets.insert(3)
-        |> Sets.insert(4)
-      end
-
+  defp simple_set(impl_module) do
+    Sets.empty(implementation: impl_module)
+    |> Sets.insert(1)
+    |> Sets.insert(2)
+    |> Sets.insert(3)
+    |> Sets.insert(4)
   end
 end
