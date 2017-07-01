@@ -29,7 +29,7 @@ defmodule Sets do
   - Implements the Sets.Behaviour (`@behaviour Sets.Behaviour`).
   - Implements the Sets.Protocol protocol.
 
-  Implementing the other protocols and behaviours listed in the Protocols section is very helpful as well,
+  Implementing the other protocols and behaviours listed in the Protocols section is a good idea as well,
   as it is possible that certain other libraries expect a set implementation to work with them.
 
   ## Examples
