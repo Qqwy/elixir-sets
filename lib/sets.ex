@@ -4,15 +4,11 @@ defmodule Sets do
 
   `Sets` exposes many functions that work with sets.
 
-  Anything that implements the `Sets.Protocol` protocol together with the `Collectable` protocol and a `empty/0` struct-returning-function,
-  can be used through this API.
-  (although it is highly advised to implement the other protocols and behaviours listed under the 'Protocols' section as well).
-
   By default, `Sets` ships with:
 
-  - `GbSet`: A Set representation built on top of a Generalized Balanced Binary Tree. Wraps the Erlang `:gb_sets` library.
-  - `Ordset`: A Set representation built on top of an ordered list. Wraps the Erlang `:ordsets` library.
-  - `UnspecifiedSet`: A set representation whose internals are unspecified (and might change in future Erlang versions). Wraps the Erlang `:sets` library.
+  - `Sets.Implementations.GbSet`: A Set representation built on top of a Generalized Balanced Binary Tree. Wraps the Erlang `:gb_sets` library.
+  - `Sets.Implementations.Ordset`: A Set representation built on top of an ordered list. Wraps the Erlang `:ordsets` library.
+  - `Sets.Implementations.UnspecifiedSet`: A set representation whose internals are unspecified (and might change in future Erlang versions). Wraps the Erlang `:sets` library.
   - `MapSet`: The Elixir set type that is part of Elixir's core library, built on top of the built-in hashmap type.
 
   ### Protocols and behaviours
@@ -28,8 +24,29 @@ defmodule Sets do
   - `Insertable`: Insertable's protocol to insert one element at a time.
   - `Inspect`: A humanly readable visual representation of the set, regardless of the inner structual representation.
 
-  If you want your own set implementation to work with `Sets`, at least `Sets.Protocol` and `Collectable` are required, but implementing
-  the others is highly recommended as well.
+  ### Creating your own Sets implementation:
+
+  If you want to create your own Sets implementation, create a module+struct that at least:
+
+  - Implements the Sets.Behaviour (`@behaviour Sets.Behaviour`).
+  - Implements the Sets.Protocol protocol.
+
+  Implementing the other protocols and behaviours listed in the Protocols section is very helpful as well,
+  as it is possible that certain other libraries expect a set implementation to work with them.
+
+  ## Examples
+
+      iex> Sets.new([1,2,3,4])
+      #Sets.Implementations.GbSet<[1, 2, 3, 4]>
+
+      iex> Sets.new([1,2,3,4], implementation: Sets.Implementations.Ordset)
+      #Sets.Implementations.Ordset<[1, 2, 3, 4]>
+
+      iex> Sets.new([1,2,3,4], implementation: MapSet)
+      #MapSet<[1, 2, 3, 4]>
+
+      iex> Sets.union(Sets.new([1,2]), Sets.new([1]))
+      #Sets.Implementations.GbSet<[1, 2]>
 
   """
 
@@ -52,11 +69,26 @@ defmodule Sets do
     impl_module = Keyword.get(options, :implementation, Application.get_env(:sets, :default_set_implementation, @default_set_implementation))
 
     case impl_module do
-      MapSet -> MapSet.new()
-      _ -> impl_module.empty()
+      MapSet ->
+        if Keyword.delete(options, :implementation) != [] do
+          IO.puts "Warning: `Sets.empty()` called for implementation `MapSet`, but it does not know these options: #{inspect(options)}"
+        end
+        MapSet.new()
+      _ ->
+        options = Keyword.delete(options, :implementation)
+        impl_module.empty(options)
     end
   end
 
+  @doc """
+  Creates a new set based on the values in `enumerable`.
+  Takes the same `options` as second argument as `empty` does:
+
+  - Pass `:implementation` with a module name to use a different set implementation.
+    By default, #{inspect(@default_set_implementation)} is used.
+
+  - Other options are passed on to the underlying set implementation.
+  """
   def new(enumerable, options \\ []) do
     Enum.into(enumerable, empty(options))
   end

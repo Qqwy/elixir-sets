@@ -1,5 +1,6 @@
 defmodule Sets.Implementations.Ordset do
   alias __MODULE__
+  @behaviour Sets.Behaviour
 
   @moduledoc """
   A General Balanced set (built on top of a General Balanced tree).
@@ -17,6 +18,12 @@ defmodule Sets.Implementations.Ordset do
 
   use FunLand.Combinable
   def empty(), do: %Ordset{contents: :ordsets.new()}
+  def empty(options) do
+    if options != [] do
+      IO.puts "Warning: GbSet.empty/1 does not understand options: #{inspect(options)}"
+    end
+    %Ordset{contents: :ordsets.new()}
+  end
   def combine(set1, set2), do: %Ordset{contents: :ordsets.union(set1, set2)}
 
   defimpl Sets.Protocol do

@@ -1,5 +1,6 @@
 defmodule Sets.Implementations.GbSet do
   alias __MODULE__
+  @behaviour Sets.Behaviour
 
   @moduledoc """
   A General Balanced set (built on top of a General Balanced tree).
@@ -17,6 +18,13 @@ defmodule Sets.Implementations.GbSet do
 
   use FunLand.Combinable
   def empty(), do: %GbSet{contents: :gb_sets.empty()}
+  def empty(options) do
+    if options != [] do
+      IO.puts "Warning: GbSet.empty/1 does not understand options: #{inspect(options)}"
+    end
+    %GbSet{contents: :gb_sets.empty()}
+  end
+
   def combine(set1, set2), do: %GbSet{contents: :gb_sets.union(set1, set2)}
 
   defimpl Sets.Protocol do

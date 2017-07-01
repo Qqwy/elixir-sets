@@ -1,5 +1,6 @@
 defmodule Sets.Implementations.UnspecifiedSet do
   alias __MODULE__
+  @behaviour Sets.Behaviour
 
   @moduledoc """
   A Set with an unspecified storage mechanism.
@@ -17,6 +18,13 @@ defmodule Sets.Implementations.UnspecifiedSet do
 
   use FunLand.Combinable
   def empty(), do: %UnspecifiedSet{contents: :sets.new()}
+  def empty(options) do
+    if options != [] do
+      IO.puts "Warning: GbSet.empty/1 does not understand options: #{inspect(options)}"
+    end
+    %UnspecifiedSet{contents: :sets.new()}
+  end
+
   def combine(set1, set2), do: %UnspecifiedSet{contents: :sets.union(set1, set2)}
 
   defimpl Sets.Protocol do

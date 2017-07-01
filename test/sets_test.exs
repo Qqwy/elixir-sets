@@ -98,5 +98,4 @@ defmodule SetsTest do
     |> Sets.insert(3)
     |> Sets.insert(4)
   end
-
 end
