@@ -10,7 +10,7 @@ defmodule Sets.Mixfile do
       deps: deps(),
       name: "Sets",
       description: description(),
-      source_url: "https://github.com/Qqwy/elixir-prioqueue",
+      source_url: "https://github.com/Qqwy/elixir-sets",
       package: package()
     ]
   end
@@ -47,7 +47,7 @@ defmodule Sets.Mixfile do
       files: ["lib", "mix.exs", "README*"],
       maintainers: ["Qqwy/Wiebe-Marten Wijnja"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/Qqwy/elixir-prioqueue"}
+      links: %{"GitHub" => "https://github.com/Qqwy/elixir-sets"}
     ]
   end
 

@@ -1,4 +1,7 @@
 # Sets
+[![hex.pm version](https://img.shields.io/hexpm/v/sets.svg)](https://hex.pm/packages/sets)
+[![Build Status](https://travis-ci.org/Qqwy/elixir-sets.svg?branch=master)](https://travis-ci.org/Qqwy/elixir-sets)
+
 
 Well-structured Sets for Elixir, offering a common interface with multiple implementations with varying performance guarantees that can be switched in your configuration.
 
