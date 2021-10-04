@@ -31,7 +31,7 @@ defmodule Sets.Mixfile do
 
       {:fun_land, "~> 0.10.0"},
       {:insertable, "~> 0.2.0"},
-      {:extractable, "~> 0.2.0"}
+      {:extractable, "~> 1.0.0"}
     ]
   end
 
